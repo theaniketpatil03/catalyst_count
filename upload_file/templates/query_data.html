@@ -1,0 +1,157 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <style>
+        .custom-dropdown {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="container mt-5">
+        <h2>Query Data</h2>
+        <form method="POST" action="{% url 'query_data' %}">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group custom-dropdown">
+                        <label for="dropdown1">Funded Year:</label>
+                        <select  class="form-control" id="dropdown1" name="funded_year">
+                            <option value="" disabled selected></option>
+                            {% for total in unique_years %}
+                                <option value="{{ total }}">{{ total }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group custom-dropdown">
+                        <label for="dropdown2">Industry:</label>
+                        <select value="" class="form-control" id="dropdown2" name="industry">
+                            <option value="" disabled ></option>
+                            {% for total in unique_industry %}
+                                <option value="{{ total }}">{{ total }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group custom-dropdown">
+                        <label for="dropdown3">Size Range:</label>
+                        <select value="" class="form-control" id="dropdown3" name="size_range">
+                            <option value="" disabled ></option>
+                            {% for total in unique_size_range %}
+                                <option value="{{ total }}">{{ total }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group custom-dropdown">
+                        <label for="dropdown4">Locality:</label>
+                        <select value="" class="form-control" id="dropdown4" name="locality">
+                            <option value="" disabled ></option>
+                            {% for total in unique_locality %}
+                                <option value="{{ total }}">{{ total }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group custom-dropdown">
+                        <label for="dropdown5">Country:</label>
+                        <select value="" class="form-control" id="dropdown5" name="country">
+                            <option value="" disabled ></option>
+                            {% for total in unique_country %}
+                                <option value="{{ total }}">{{ total }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group custom-dropdown">
+                        <label for="dropdown6">Current Employee Estm:</label>
+                        <select value="" class="form-control" id="dropdown6" name="current_employee">
+                            <option value="" disabled ></option>
+                            {% for total in unique_current_employee %}
+                                <option value="{{ total }}">{{ total }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group custom-dropdown">
+                        <label for="dropdown7">Total Employee Estm:</label>
+                        <select value="" class="form-control" id="dropdown7" name="total_employee">
+                            <option value="" disabled ></option>
+                            {% for total in unique_total_employee %}
+                                <option value="{{ total }}">{{ total }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+
+    <div class="container mt-5">
+        <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Funded Year</th>
+                <th scope="col">Domain</th>
+                <th scope="col">industry</th>
+                <th scope="col">Size Range</th>
+                <th scope="col">Locality</th>
+                <th scope="col">Country</th>
+                <th scope="col">Linkedin</th>
+                <th scope="col">Current Emp Est</th>
+                <th scope="col">Total Emp Est</th>
+              </tr>
+            </thead>
+            <tbody>
+                {% for obj in table_data %}
+                    <tr>
+                        <td>{{ obj.id }}</td>
+                        <td>{{ obj.name }}</td>
+                        <td>{{ obj.domain }}</td>
+                        <td>{{ obj.year_founded }}</td>
+                        <td>{{ obj.industry }}</td>
+                        <td>{{ obj.size_range }}</td>
+                        <td>{{ obj.locality }}</td>
+                        <td>{{ obj.country }}</td>
+                        <td>{{ obj.linkedin_url }}</td>
+                        <td>{{ obj.current_employee_estimate }}</td>
+                        <td>{{ obj.total_employee_estimate }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+          </table>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set the default option to blank after the page has loaded
+            var dropdowns = document.querySelectorAll('select');
+            dropdowns.forEach(function(dropdown) {
+                dropdown.selectedIndex = -1;
+            })
+        });
+    </script>
+</body>
+</html>
