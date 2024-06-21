@@ -1,8 +1,5 @@
 # catalyst_count
 
-# Supervisor Note - 
-    I haven't completed the all the steps (mostly ui) because of less time due to my working schedule, but let me know was it the right approach or not which I chose to complete this project. 
-    Give some suggestions so that I can improve.
 # Django Chunked CSV File in PostgreSQL and Query Dataset
 
 
